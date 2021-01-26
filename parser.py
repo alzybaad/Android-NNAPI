@@ -48,10 +48,13 @@ def loadSupportingApiLevels(operations):
     supporting_api_levels = []
 
     for operation in operations:
-        operation_id = operation[2][operation[2].index('#'):]
-        element = soup.select_one(operation_id)
-        info_element = getInfoElement(element)
-        supporting_api_levels.append(getSupportingApiLevels(info_element))
+        if operation[1] == 'ANEURALNETWORKS_QUANTIZED_16BIT_LSTM':
+            supporting_api_levels.append([29]) # not written in HTML
+        else:
+            operation_id = operation[2][operation[2].index('#'):]
+            element = soup.select_one(operation_id)
+            info_element = getInfoElement(element)
+            supporting_api_levels.append(getSupportingApiLevels(info_element))
 
     return supporting_api_levels
 
